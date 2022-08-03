@@ -73,7 +73,7 @@ export function App() {
           <TodoList lista={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
         </Row>
         <Row>
-          <Col sm={2}><input ref={handleTaskRef} type="text" placeholder="Nueva tarea"></input></Col>
+          <Col sm={2}><input autoFocus ref={handleTaskRef} type="text" placeholder="Nueva tarea"></input></Col>
           <Col sm={2}><button onClick={handleTodoAdd}>Añadir</button></Col>
           <Col sm={2}><button>Borrar</button></Col>
         </Row>

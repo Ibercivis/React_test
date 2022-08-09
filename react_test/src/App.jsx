@@ -19,12 +19,13 @@ export function App() {
   const [todos, setTodos] = useState([
     { id: 1, task: "tarea 1", completed: false }
   ]); //primer propiedad, el estado en sí, segunda propiedad la función que hace modificar ese estado, basicamente el primero es la variable y la segunda el metodo para cambiarlo
-
-  const[calculo, setCalculo] =useState({result: 0, rest: 0});
-
+  const [calculo, setCalculo] = useState({ result: 0, rest: 10 });
+  
   const handleTaskRef = useRef();
   const entradaTecladoA = useRef();
   const entradaTecladoB = useRef();
+
+  const [resultado, setResultado] =useState({resultado: 100});
 
   //se usa para recuperar lo guardado en la storage
   useEffect(() => {
@@ -44,7 +45,7 @@ export function App() {
    */
   const handleTodoAdd = () => {
     const task = handleTaskRef.current.value; //se rescata el valor de la referencia
-    if (task == "") { return }
+    if (task === "") { return }
 
     //se usará el setTodos que es la funcion que modifica el estado. Hace una copia del anterior value para poder escuchar los cambios, no se modifica directamente
     setTodos((estadoPrevio) => {
@@ -56,7 +57,7 @@ export function App() {
   //cambia el valor completed
   const toggleTodo = (id) => {
     const newTodo = [...todos];
-    const tarea = newTodo.find((item) => item.id == id);
+    const tarea = newTodo.find((item) => item.id === id);
     tarea.completed = !tarea.completed;
     setTodos(newTodo);
   }
@@ -74,51 +75,53 @@ export function App() {
    * Zona calculo
    */
 
-  const calcular = () =>{
+  const calcular = () => {
     const entradaA = parseInt(entradaTecladoA?.current?.value);
     const entradaB = parseInt(entradaTecladoB?.current?.value);
 
-    if(entradaA == null && entradaB == null){ return }
+    if (entradaA == null && entradaB == null) { return }
 
     const sum = entradaA + entradaB;
     const rest = entradaA - entradaB;
-
-    setCalculo({result: sum,rest: rest});
+    // setResultado({resultado: 200});
+    setCalculo({ result: sum, rest: rest });
   }
-
-  return (
-    <Fragment>
-      <Container>
-        <Row><h2>Prueba</h2></Row>
-        <Row>
-          <TodoList lista={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
-        </Row>
-        <Row>
-          <Col sm={2}><input autoFocus ref={handleTaskRef} type="text" placeholder="Nueva tarea"></input></Col>
-          <Col sm={2}><button onClick={handleTodoAdd}>Añadir</button></Col>
-          <Col sm={2}><button>Borrar</button></Col>
-        </Row>
-        <Row>
-          <div>Te quedan {todos.filter((todo) => !todo.completed).length} tareas</div>
-        </Row>
-      </Container>
-      <Container style={{marginTop: 100}}>
-        <Row><h2>Calculadora</h2></Row>
-        <Row>
-          <Calculo valor={calculo} />
-        </Row>
-        {/* <Row>
-          <Col sm={2}>El resultado es {calculo.result}</Col>
-          <Col sm={2}>El resultado es {calculo.rest}</Col>
-        </Row> */}
-        <Row>
-          <Col sm={2}><input autoFocus ref={entradaTecladoA} type="number" placeholder="Digito 1"></input></Col>
-          <Col sm={2}><input autoFocus ref={entradaTecladoB} type="number" placeholder="Digito 2"></input></Col>
-          <Col sm={2}><button onClick={calcular}>Calcular</button></Col>
-          <Col sm={2}><button>Borrar</button></Col>
-        </Row>
-      </Container>
-    </Fragment>
-    
-  )
+  let estado = true;
+  if(estado){
+    return (
+      <Fragment>
+        <Container>
+          <Row><h2>Prueba</h2></Row>
+          <Row>
+            <TodoList lista={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+          </Row>
+          <Row>
+            <Col sm={2}><input autoFocus ref={handleTaskRef} type="text" placeholder="Nueva tarea"></input></Col>
+            <Col sm={2}><button onClick={handleTodoAdd}>Añadir</button></Col>
+            <Col sm={2}><button>Borrar</button></Col>
+          </Row>
+          <Row>
+            <div>Te quedan {todos.filter((todo) => !todo.completed).length} tareas</div>
+          </Row>
+        </Container>
+        <Container style={{ marginTop: 100 }}>
+          <Row><h2>Calculadora</h2></Row>
+          <Row>
+            <Calculo dato={calculo}  resultado1={resultado}/>
+          </Row>
+          {/* <Row>
+            <Col sm={2}>El resultado es {calculo.result}</Col>
+            <Col sm={2}>El resultado es {calculo.rest}</Col>
+          </Row> */}
+          <Row>
+            <Col sm={2}><input autoFocus ref={entradaTecladoA} type="number" placeholder="Digito 1"></input></Col>
+            <Col sm={2}><input autoFocus ref={entradaTecladoB} type="number" placeholder="Digito 2"></input></Col>
+            <Col sm={2}><button onClick={calcular}>Calcular</button></Col>
+            <Col sm={2}><button>Borrar</button></Col>
+          </Row>
+        </Container>
+      </Fragment>
+  
+    )
+  }
 }

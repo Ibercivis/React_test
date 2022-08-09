@@ -16,15 +16,10 @@ export default function TodoItem({ todo, toggleTodo, deleteTodo }) {
     }
 
     return (
-        // <li>
-        //     <input type="checkbox" checked={completed} onChange={onChangeTodo}></input>{task}<button onClick={onDeleteTodo}>X</button>
-        // </li>
         <Row>
             <Col sm={2}><input type="checkbox" checked={completed} onChange={onChangeTodo}></input></Col>
             <Col sm={2}>{task}</Col>
             <Col sm={2}><button onClick={onDeleteTodo}>X</button></Col>
         </Row>
-
-
     )
 }
